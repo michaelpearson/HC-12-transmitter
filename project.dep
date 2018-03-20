@@ -78,7 +78,7 @@
             <inputs>
                 <tool>
                     <name>ILINK</name>
-                    <file> 3 5 17 30 15 34 7 11 0 1</file>
+                    <file> 3 5 17 15 34 7 9 11 0 1</file>
                 </tool>
             </inputs>
         </file>
@@ -97,7 +97,7 @@
             <inputs>
                 <tool>
                     <name>ICCSTM8</name>
-                    <file> 43 4 41 45 38 44 40 6 28 29 23 21 24 20 25 22 26</file>
+                    <file> 43 4 41 45 38 44 40 6 28 29 23 21 24 20 25 22 26 39 2</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
@@ -261,10 +261,6 @@
         <forcedrebuild>
             <name>$PROJ_DIR$\src\tx.c</name>
             <tool>C-STAT</tool>
-        </forcedrebuild>
-        <forcedrebuild>
-            <name>[MULTI_TOOL]</name>
-            <tool>ILINK</tool>
         </forcedrebuild>
     </configuration>
     <configuration>
