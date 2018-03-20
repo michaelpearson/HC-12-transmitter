@@ -35,4 +35,6 @@ void read_rx_fifo(u8 * buffer, u8 length);
 
 u8 is_data_ready();
 
+u8 is_tx_finished();
+
 #endif

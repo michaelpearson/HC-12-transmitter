@@ -5,6 +5,9 @@
 #include <stdio.h>
 #include <uart.h>
 
+//#define TX
+#define RX
+
 void _print_interrupt_status() {
   printf("Interrupt status:\r\n");
   print_interrupt_status();
@@ -32,10 +35,22 @@ int main() {
   SPI_init();
   Radio_init();
   
+#ifdef TX
+  char buffer[] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+  u8 i = 0;
+  while(1) {
+    sprintf(buffer, "I: %d", i++);
+    transmit_data((u8 *)buffer);
+    while(!is_tx_finished());
+  }
+#endif
+  
+#ifdef RX
   start_rx();
   while (1) {
     if (is_data_ready()) {
       print_fifo_info();
     }
   }
+#endif
 }

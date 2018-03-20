@@ -40,11 +40,21 @@ void read_and_clear_interrupts(u8 interrupt_status[9]);
 u8 radio_configuration_data[] = RADIO_CONFIGURATION_DATA_ARRAY;
 
 u8 rx_data_ready = 0;
+u8 tx_data_sent = 0;
 
 INTERRUPT_HANDLER(radio_interrupt_handler, 5) {
   u8 buffer[9];
   read_and_clear_interrupts(buffer);
-  rx_data_ready = 1;
+  
+  // PACKET_SENT_PEND
+  if (buffer[3] & (1 << 5)) {
+    tx_data_sent = 1;
+  }
+  
+  // PACKET_RX_PEND
+  if (buffer[3] & (1 << 4)) {
+    rx_data_ready = 1;
+  }
 }
 
 static inline void Enable_radio() {
@@ -207,6 +217,7 @@ void read_rx_fifo(u8 * buffer, u8 length) {
 }
 
 void transmit_data(u8 data[FIELD_LENGTH]) {
+  tx_data_sent = 0;
   Write_command_read_response(WRITE_TX_FIFO, data, FIELD_LENGTH, NULL, 0);
   start_tx();
 }
@@ -226,6 +237,10 @@ void print_interrupt_status() {
 
 u8 is_data_ready() {
   return rx_data_ready;
+}
+
+u8 is_tx_finished() {
+  return tx_data_sent;
 }
 
 
